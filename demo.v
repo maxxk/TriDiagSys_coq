@@ -17,9 +17,12 @@ Record TriDiagSys := {
 Definition x_2 (SLE : TriDiagSys) : R :=
   let n := n SLE in
   let b := b SLE in
-  match n with  
-  | 0 => hd b (*Длина b = (S n), => там есть хотя бы 1 элемент*)
-  | S k =>
+  let t := fun n => vector R (S n) in
+  let T := sigT t in
+  match (existT t n b): T
+  with  
+  | existT _ 0 b => hd b (*Длина b = (S n), => там есть хотя бы 1 элемент*)
+  | existT _ (S k) b =>
     let b_1 := hd b in
     let tlb := tl b in (*n := S k => длина b - S(S k) то есть хотя бы 2 и tl b != nil*)
     let b_2 := hd tlb in
